@@ -1,6 +1,6 @@
 package com.studying.bankAnalyzer;
 
-import tools.jackson.databind.JsonNode;
+import com.studying.bankAnalyzer.dtos.ExchangeRatesResponse;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -63,12 +63,18 @@ public class Main {
                 .GET()
                 .build();
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
         // First way
         var responseString = response.body();
+//        var mapper = new ObjectMapper();
+//        JsonNode node = mapper.readTree(responseString);
+//        JsonNode ratesTree = node.get("rates");
+//        JsonNode rate = ratesTree.get(currency);
+//        return rate.asDouble(0);
+
+        // Second way (like Enterprise)
         var mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(responseString);
-        JsonNode ratesTree = node.get("rates");
-        JsonNode rate = ratesTree.get(currency);
-        return rate.asDouble(0);
+        ExchangeRatesResponse responseRecord = mapper.readValue(responseString, ExchangeRatesResponse.class);
+        return responseRecord.rates().get(currency);
     }
 }
