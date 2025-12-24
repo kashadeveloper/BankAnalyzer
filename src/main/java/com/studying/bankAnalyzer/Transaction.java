@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -28,7 +29,16 @@ public class Transaction {
         return "========== ТРАНЗАКЦИЯ ==========" + newLine +
                 "Дата: " + Date + newLine +
                 "Категория: " + Category + newLine +
-                "Сумма: " + Amount + newLine +
+                "Сумма: " + Amount  + "$" + newLine +
+                "========= ТРАНЗАКЦИЯ ==========" + newLine;
+    }
+
+    public String toString(double currencyRate, String currency) {
+        var newLine = System.lineSeparator();
+        return "========== ТРАНЗАКЦИЯ ==========" + newLine +
+                "Дата: " + Date + newLine +
+                "Категория: " + Category + newLine +
+                "Сумма: " + (Amount * currencyRate) + " " + currency + newLine +
                 "========= ТРАНЗАКЦИЯ ==========" + newLine;
     }
 }
