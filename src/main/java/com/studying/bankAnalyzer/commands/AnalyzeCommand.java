@@ -98,7 +98,7 @@ public class AnalyzeCommand implements Callable<Integer> {
 
     private void PrintResult(List<Transaction> transactions) {
         if (transactions.isEmpty()) {
-            System.out.println(ansi().bold().fg(Ansi.Color.RED).a("No transactions found!"));
+            System.out.println(ansi().bold().fg(Ansi.Color.RED).a("No transactions found!").reset());
             return;
         }
         System.out.println(ansi().render("@|bold,yellow Date\t\t\tAmount\t\tCategory\n|@"));
