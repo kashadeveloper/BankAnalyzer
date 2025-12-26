@@ -6,8 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import static com.studying.bankAnalyzer.utils.HelperFunctions.getColorByAmount;
+import static org.fusesource.jansi.Ansi.ansi;
 
 @Data
 @NoArgsConstructor
@@ -23,22 +26,18 @@ public class Transaction {
     @CsvBindByName(column = "amount")
     public double Amount;
 
-    @Override
-    public String toString() {
-        var newLine = System.lineSeparator();
-        return "========== ТРАНЗАКЦИЯ ==========" + newLine +
-                "Дата: " + Date + newLine +
-                "Категория: " + Category + newLine +
-                "Сумма: " + Amount  + "$" + newLine +
-                "========= ТРАНЗАКЦИЯ ==========" + newLine;
+    public String toColoredString() {
+        return ansi().render(String.format("@|white %s|@\t\t@|underline,bold,%s %.2f$|@\t\t@|bold,cyan %s|@",
+                Date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                getColorByAmount(Amount),
+                Amount,
+                Category
+        )).toString();
     }
 
-    public String toString(double currencyRate, String currency) {
-        var newLine = System.lineSeparator();
-        return "========== ТРАНЗАКЦИЯ ==========" + newLine +
-                "Дата: " + Date + newLine +
-                "Категория: " + Category + newLine +
-                "Сумма: " + (Amount * currencyRate) + " " + currency + newLine +
-                "========= ТРАНЗАКЦИЯ ==========" + newLine;
+    @Override
+    public String toString() {
+        String formattedDate = Date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        return formattedDate + "\t\t" + String.format("%.2f", Amount) + "\t\t" + Category;
     }
 }
