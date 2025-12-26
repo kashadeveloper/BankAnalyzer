@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-@CommandLine.Command(name = "analyze", description = "Analyze CSV of transactions")
+@CommandLine.Command(name = "analyze", mixinStandardHelpOptions = true, description = "Analyze CSV of transactions")
 public class AnalyzeCommand implements Callable<Integer> {
-    @CommandLine.Parameters(index = "0", description = "Path to file with transactions")
+    @CommandLine.Parameters(index = "0", arity = "1", description = "Path to file with transactions", paramLabel = "<filePath>")
     private String filePath;
 
     @CommandLine.Option(names = {"--stats", "-s"}, description = "Show stats")

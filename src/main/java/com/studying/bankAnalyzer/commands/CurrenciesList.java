@@ -8,12 +8,12 @@ import java.util.concurrent.Callable;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-@CommandLine.Command(name = "currencies", description = "All currencies list")
+@CommandLine.Command(name = "currencies", mixinStandardHelpOptions = true, description = "All currencies list")
 public class CurrenciesList implements Callable<Integer> {
-    @CommandLine.Option(names = {"--a", "--appid"}, required = true, description = "App ID for openexchangerates.org API")
+    @CommandLine.Option(names = {"--a", "--appid", "--appId"}, required = true, description = "App ID for openexchangerates.org API")
     private String appId;
 
-    @CommandLine.Option(names = "-c", arity = "1", description = "Currency name")
+    @CommandLine.Parameters(arity = "0..1", description = "Currency name")
     private String currency;
 
     @Override
